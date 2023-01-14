@@ -1,0 +1,77 @@
+@charset "utf-8";
+$startColor:orange;
+$translateValue:10px;
+ul{
+    list-style:none;
+}
+.boxes{
+    li{
+        width:100px;
+        height:100px;
+        background-color:$startColor;
+        border:1px solid #333;
+        @for $i from 2 through 5{
+            &:nth-child(#{$i}){
+                transform:translateX($i*20px) rotate($i*5deg);
+                background-color:adjust-hue($startColor,$i*40deg);
+            }
+        }
+    }
+}
+
+.boxes2{
+    display:flex;
+    margin:100px 0;
+    li{
+        width:100px;
+        height:100px;
+        background-color:#eee;
+        border:1px solid #aaa;
+        &:not(first-child){
+            margin-left:10px;
+        }
+        @for $i from 2 through 10{
+            &:nth-child(#{$i}){
+                background-color:darken(#eee,$i*5%);
+                @if $i %2==0{
+                    transform:translateY($i*$translateValue);
+                }@else{
+                    transform:translateY($i*(-$translateValue));
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeIn{
+    0%{
+        transform:translateY(30px);
+        opacity:0;
+    }
+}
+
+.boxes3{
+    margin-bottom:300px;
+    display:flex;
+    li{
+        width:100px;
+        height:100px;
+        background-color: #eee;
+        border:1px solid #aaa;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        animation:fadeIn 2s backwards;
+        &:not(nth-child(first-child)){
+            margin-left:10px;
+        }
+        @for $i from 1 through 5{
+            &:nth-child(#{$i}){
+                animation-delay:0.2s*$i;
+                &::before{
+                    content:"#{$i}";
+                }
+            }
+        }
+    }
+}
